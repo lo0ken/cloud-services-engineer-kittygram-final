@@ -45,3 +45,20 @@ jobs:
           python -m flake8 backend/
           cd backend/
           python manage.py test
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend/
+          npm ci
+
+      - name: Run frontend tests
+        run: |
+          cd frontend/
+          npm test
+        env:
+          CI: true
