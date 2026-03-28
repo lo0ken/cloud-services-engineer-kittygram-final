@@ -120,6 +120,12 @@ jobs:
 
       - name: Create .env file on server
         uses: appleboy/ssh-action@master
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
