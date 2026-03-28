@@ -125,18 +125,17 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          envs: POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DJANGO_SECRET_KEY,ALLOWED_HOSTS
           script: |
             cd kittygram
-            cat > .env << 'ENVEOF'
-            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            DB_HOST=postgres
-            DB_PORT=5432
-            SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
-            DEBUG=False
-            ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
-            ENVEOF
+            echo "POSTGRES_DB=$POSTGRES_DB" > .env
+            echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+            echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+            echo "DB_HOST=postgres" >> .env
+            echo "DB_PORT=5432" >> .env
+            echo "SECRET_KEY=$DJANGO_SECRET_KEY" >> .env
+            echo "DEBUG=False" >> .env
+            echo "ALLOWED_HOSTS=$ALLOWED_HOSTS" >> .env
 
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
